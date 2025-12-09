@@ -6,14 +6,14 @@ import { Button } from "@/components/ui/button"
 import { Heart, X } from "lucide-react"
 
 const donationOptions = [
-  { value: 25, url: "https://go.plataformafortpay.com.br/hbirwzmeyc" },
-  { value: 50, url: "https://go.plataformafortpay.com.br/zayw1" },
-  { value: 75, url: "https://go.plataformafortpay.com.br/pdku7" },
-  { value: 100, url: "https://go.plataformafortpay.com.br/0bbvp", popular: true },
-  { value: 150, url: "https://go.plataformafortpay.com.br/kin0t" },
-  { value: 250, url: "https://go.plataformafortpay.com.br/nr8pr" },
-  { value: 500, url: "https://go.plataformafortpay.com.br/f8qii" },
-  { value: 1000, url: "https://go.plataformafortpay.com.br/tbrrp" },
+  { value: 25, url: "https://go.pepperpay.com.br/a4s0x" },
+  { value: 50, url: "https://go.pepperpay.com.br/0rjry" },
+  { value: 75, url: "https://go.pepperpay.com.br/orsax" },
+  { value: 100, url: "https://go.pepperpay.com.br/8orfl", popular: true },
+  { value: 150, url: "https://go.pepperpay.com.br/6mj7y" },
+  { value: 250, url: "https://go.pepperpay.com.br/lse55" },
+  { value: 500, url: "https://go.pepperpay.com.br/3b5of" },
+  { value: 1000, url: "https://go.pepperpay.com.br/3sxmk" },
 ]
 
 export function DonationOptions() {
@@ -23,7 +23,7 @@ export function DonationOptions() {
     <section id="donation-options" className="py-16 bg-white">
       <div className="container mx-auto px-4 max-w-5xl">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4 text-center text-balance">
-          Ajude a levar um prato de comida para quem mais precisa
+          Projeto Ebenezer: sua contribuição ajuda a garantir alimento a quem necessita!
         </h2>
 
         <p className="text-center text-gray-600 mb-12 text-lg">Escolha um valor para doar:</p>
@@ -83,7 +83,7 @@ export function DonationOptions() {
             <p className="text-gray-600 mb-8 text-center">Considere doar R$150 e fazer ainda mais diferença.</p>
 
             <Link
-              href="https://go.plataformafortpay.com.br/kin0t"
+              href="https://go.pepperpay.com.br/6mj7y"
               target="_blank"
               rel="noopener noreferrer"
               className="block w-full mb-4"
@@ -94,7 +94,7 @@ export function DonationOptions() {
             </Link>
 
             <Link
-              href="https://go.plataformafortpay.com.br/0bbvp"
+              href="https://go.pepperpay.com.br/8orfl"
               target="_blank"
               rel="noopener noreferrer"
               className="block text-center text-green-600 hover:text-green-700 font-semibold underline"

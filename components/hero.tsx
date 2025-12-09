@@ -75,9 +75,9 @@ export function Hero() {
             </p>
 
             <p className="text-base md:text-lg text-gray-700 leading-relaxed">
-              <strong>Nós queremos mudar isso...</strong> Com a sua ajuda, queremos preparar um almoço por semana para
-              essas crianças e famílias que lutam para sobreviver. Pode parecer pouco para quem tem tudo, mas para elas,
-              um prato de comida significa esperança, força e vida.
+              <strong>O Projeto Ebenezer atua para mudar isso</strong> Com a sua ajuda, queremos preparar um almoço por
+              semana para essas crianças e famílias que lutam para sobreviver. Pode parecer pouco para quem tem tudo,
+              mas para elas, um prato de comida significa esperança, força e vida.
             </p>
 
             <Button
