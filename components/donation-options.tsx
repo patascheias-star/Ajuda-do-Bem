@@ -110,7 +110,7 @@ export function DonationOptions() {
             <div className="flex justify-center mb-6">
               <div className="border-4 border-purple-400 rounded-2xl p-4">
                 <img
-                  src="/images/qr-20code.png"
+                  src="/qr-code.png"
                   alt="QR Code PIX"
                   width={260}
                   height={260}
