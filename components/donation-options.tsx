@@ -1,23 +1,54 @@
 "use client"
 
 import { useState } from "react"
-import Link from "next/link"
+import Image from "next/image"
 import { Button } from "@/components/ui/button"
-import { Heart, X } from "lucide-react"
+import { Heart, X, Copy, Check } from "lucide-react"
 
 const donationOptions = [
-  { value: 25, url: "https://go.pepperpay.com.br/a4s0x" },
-  { value: 50, url: "https://go.pepperpay.com.br/0rjry" },
-  { value: 75, url: "https://go.pepperpay.com.br/orsax" },
-  { value: 100, url: "https://go.pepperpay.com.br/8orfl", popular: true },
-  { value: 150, url: "https://go.pepperpay.com.br/6mj7y" },
-  { value: 250, url: "https://go.pepperpay.com.br/lse55" },
-  { value: 500, url: "https://go.pepperpay.com.br/3b5of" },
-  { value: 1000, url: "https://go.pepperpay.com.br/3sxmk" },
+  { value: 25 },
+  { value: 50 },
+  { value: 75 },
+  { value: 100, popular: true },
+  { value: 150 },
+  { value: 250 },
+  { value: 500 },
+  { value: 1000 },
 ]
 
+const PIX_KEY = "d9c5fc90-38b2-4cf6-8873-2fa9be331143"
+
 export function DonationOptions() {
+  const [showPixModal, setShowPixModal] = useState(false)
+  const [selectedValue, setSelectedValue] = useState<number | null>(null)
   const [showUpsellModal, setShowUpsellModal] = useState(false)
+  const [copied, setCopied] = useState(false)
+
+  const handleDonationClick = (value: number) => {
+    if (value === 100) {
+      setShowUpsellModal(true)
+    } else {
+      setSelectedValue(value)
+      setShowPixModal(true)
+    }
+  }
+
+  const handleUpsellConfirm = () => {
+    setSelectedValue(150)
+    setShowUpsellModal(false)
+    setShowPixModal(true)
+  }
+
+  const copyPixKey = () => {
+    navigator.clipboard.writeText(PIX_KEY)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  const generateQRCodeUrl = (value: number) => {
+    const pixData = `00020126580014br.gov.bcb.brcode0136${PIX_KEY}5204000053039865802BR5913PROJETO EBENEZER6009SAO PAULO62110503***630478C1`
+    return `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(pixData)}`
+  }
 
   return (
     <section id="donation-options" className="py-16 bg-white">
@@ -32,7 +63,7 @@ export function DonationOptions() {
           {donationOptions.map((option) => (
             <div key={option.value} className="relative">
               <Button
-                onClick={() => window.open(option.url, "_blank")}
+                onClick={() => handleDonationClick(option.value)}
                 className={`w-full h-20 text-xl font-bold ${
                   option.popular
                     ? "bg-green-600 hover:bg-green-700 text-white ring-2 ring-green-400 ring-offset-2"
@@ -52,7 +83,10 @@ export function DonationOptions() {
         </div>
 
         <div
-          onClick={() => setShowUpsellModal(true)}
+          onClick={() => {
+            setSelectedValue(150)
+            setShowUpsellModal(true)
+          }}
           className="bg-green-50 border border-green-200 rounded-lg p-8 text-center cursor-pointer hover:bg-green-100 transition-colors"
         >
           <p className="text-xl font-semibold text-gray-900 mb-4">
@@ -61,6 +95,77 @@ export function DonationOptions() {
           <p className="text-gray-600">Sua doação é segura e fácil. Você receberá um comprovante por e-mail.</p>
         </div>
       </div>
+
+      {showPixModal && selectedValue && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-md w-full p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button
+              onClick={() => setShowPixModal(false)}
+              className="absolute top-4 right-4 text-gray-400 hover:text-gray-600"
+            >
+              <X className="h-6 w-6" />
+            </button>
+
+            <h3 className="text-2xl font-bold text-gray-900 mb-6">Doação via PIX</h3>
+
+            <div className="bg-purple-50 rounded-lg p-4 mb-6">
+              <p className="text-sm text-gray-700 font-semibold mb-2">Use o QR Code do Pix para pagar</p>
+              <p className="text-xs text-gray-600">Abra a app em que vai fazer a transferência, escanele a imagem!</p>
+            </div>
+
+            <div className="flex justify-center mb-6">
+              <div className="border-4 border-purple-400 rounded-2xl p-4">
+                <img
+                  src={generateQRCodeUrl(selectedValue) || "/placeholder.svg"}
+                  alt="QR Code PIX"
+                  width={260}
+                  height={260}
+                  className="rounded-lg"
+                />
+              </div>
+            </div>
+
+            <div className="bg-yellow-50 rounded-lg p-4 mb-6">
+              <p className="text-xs text-gray-600 mb-2">Chave PIX (Aleatória)</p>
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={PIX_KEY}
+                  readOnly
+                  className="flex-1 bg-white border border-yellow-300 rounded px-3 py-2 text-sm font-mono text-gray-900"
+                />
+                <button
+                  onClick={copyPixKey}
+                  className="bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-3 py-2 rounded font-bold transition-colors"
+                >
+                  {copied ? (
+                    <Check className="h-5 w-5" />
+                  ) : (
+                    <Copy className="h-5 w-5" />
+                  )}
+                </button>
+              </div>
+            </div>
+
+            <div className="bg-blue-50 rounded-lg p-4">
+              <p className="text-sm font-bold text-gray-900 mb-3">Como fazer sua doação:</p>
+              <ol className="text-sm text-gray-700 space-y-2">
+                <li><strong>1.</strong> Abra seu banco ou app PIX</li>
+                <li><strong>2.</strong> Selecione "Transferência PIX" ou escanele o QR Code</li>
+                <li><strong>3.</strong> Cole a chave PIX ou use o código</li>
+                <li><strong>4.</strong> Confirme o valor e conclua a transferência</li>
+              </ol>
+            </div>
+
+            <Button
+              onClick={() => setShowPixModal(false)}
+              className="w-full mt-6 bg-gray-900 hover:bg-gray-800 text-white text-lg py-6 font-bold"
+            >
+              Fechar
+            </Button>
+          </div>
+        </div>
+      )}
 
       {showUpsellModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
@@ -82,25 +187,23 @@ export function DonationOptions() {
 
             <p className="text-gray-600 mb-8 text-center">Considere doar R$150 e fazer ainda mais diferença.</p>
 
-            <Link
-              href="https://go.pepperpay.com.br/6mj7y"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block w-full mb-4"
+            <Button
+              onClick={handleUpsellConfirm}
+              className="w-full mb-4 bg-green-600 hover:bg-green-700 text-white text-lg py-6 font-bold"
             >
-              <Button className="w-full bg-green-600 hover:bg-green-700 text-white text-lg py-6 font-bold">
-                SIM, QUERO DOAR R$150
-              </Button>
-            </Link>
+              SIM, QUERO DOAR R$150
+            </Button>
 
-            <Link
-              href="https://go.pepperpay.com.br/8orfl"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-center text-green-600 hover:text-green-700 font-semibold underline"
+            <button
+              onClick={() => {
+                setSelectedValue(100)
+                setShowUpsellModal(false)
+                setShowPixModal(true)
+              }}
+              className="block w-full text-center text-green-600 hover:text-green-700 font-semibold underline"
             >
               Quero continuar doando R$100
-            </Link>
+            </button>
           </div>
         </div>
       )}
