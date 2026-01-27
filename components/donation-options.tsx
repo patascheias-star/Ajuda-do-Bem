@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { Heart, X, Copy, Check } from "lucide-react"
 
@@ -43,11 +42,6 @@ export function DonationOptions() {
     navigator.clipboard.writeText(PIX_KEY)
     setCopied(true)
     setTimeout(() => setCopied(false), 2000)
-  }
-
-  const generateQRCodeUrl = (value: number) => {
-    const pixData = `00020126580014br.gov.bcb.brcode0136${PIX_KEY}5204000053039865802BR5913PROJETO EBENEZER6009SAO PAULO62110503***630478C1`
-    return `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(pixData)}`
   }
 
   return (
@@ -116,7 +110,7 @@ export function DonationOptions() {
             <div className="flex justify-center mb-6">
               <div className="border-4 border-purple-400 rounded-2xl p-4">
                 <img
-                  src={generateQRCodeUrl(selectedValue) || "/placeholder.svg"}
+                  src="/images/qr-20code.png"
                   alt="QR Code PIX"
                   width={260}
                   height={260}
