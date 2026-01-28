@@ -89,7 +89,7 @@ export function Hero() {
               className="w-full bg-blue-600 hover:bg-blue-700 text-white text-lg md:text-xl py-6 md:py-7 font-bold rounded-xl shadow-lg"
             >
               <Heart className="mr-2 h-5 w-5 md:h-6 md:w-6" fill="currentColor" />
-              Quero Ajudar
+              Doar Agora
             </Button>
 
             <div className="bg-white rounded-lg shadow-md p-4 md:p-6 space-y-3 md:space-y-4">
